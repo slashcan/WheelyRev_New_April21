@@ -1,0 +1,55 @@
+﻿/* styles.css */
+
+.wrapper {
+  height: 30px;
+  min-width: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFF;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.wrapper span {
+  width: 30%;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 300;
+  cursor: pointer;
+  user-select: none;
+}
+
+.wrapper span:hover {
+  color: orangered;
+}
+
+.wrapper span.num {
+  font-size: 20px;
+  border-right: 2px solid rgba(0,0,0,0.2);
+  border-left: 2px solid rgba(0,0,0,0.2);
+  pointer-events: none;
+}
+
+.transact_button{
+    margin-top: 5%;
+}
+.Contact_info{
+    margin-top: 10%;
+}
+.Contact_info input{
+    width: 250px;
+}
+
+.total-section{
+    margin-top: 3%;
+}
+.totalText{
+    margin-top: 2%;
+}
+.DisplayTotal-section{
+    display: inline-block;
+    margin-right: 280px;
+    font-family: 'Poppins', sans-serif;
+    font-size: x-large;
+}

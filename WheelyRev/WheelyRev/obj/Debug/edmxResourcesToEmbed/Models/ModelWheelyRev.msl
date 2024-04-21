@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WheelyRevModelStoreContainer" CdmEntityContainer="WheelyRevEntities">
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="WheelyRevModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="roleId" ColumnName="roleId" />
+          <ScalarProperty Name="roleName" ColumnName="roleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="WheelyRevModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="age" ColumnName="age" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoles">
+      <EntityTypeMapping TypeName="WheelyRevModel.UserRoles">
+        <MappingFragment StoreEntitySet="UserRoles">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="roleId" ColumnName="roleId" />
+          <ScalarProperty Name="UserRoles_ID" ColumnName="UserRoles_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_UserRoles">
+      <EntityTypeMapping TypeName="WheelyRevModel.vw_UserRoles">
+        <MappingFragment StoreEntitySet="vw_UserRoles">
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="roleName" ColumnName="roleName" />
+          <ScalarProperty Name="roleId" ColumnName="roleId" />
+          <ScalarProperty Name="UserRoles_ID" ColumnName="UserRoles_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_DefaultRole" FunctionName="WheelyRevModel.Store.sp_DefaultRole" />
+    <EntitySetMapping Name="Shops">
+      <EntityTypeMapping TypeName="WheelyRevModel.Shops">
+        <MappingFragment StoreEntitySet="Shops">
+          <ScalarProperty Name="shopDescription" ColumnName="shopDescription" />
+          <ScalarProperty Name="shopPostalCode" ColumnName="shopPostalCode" />
+          <ScalarProperty Name="shopState" ColumnName="shopState" />
+          <ScalarProperty Name="shopCity" ColumnName="shopCity" />
+          <ScalarProperty Name="shopProfile" ColumnName="shopProfile" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="contact" ColumnName="contact" />
+          <ScalarProperty Name="shopAddress" ColumnName="shopAddress" />
+          <ScalarProperty Name="shopName" ColumnName="shopName" />
+          <ScalarProperty Name="shopId" ColumnName="shopId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_setShopOwner" FunctionName="WheelyRevModel.Store.sp_setShopOwner" />
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="WheelyRevModel.Products">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="productCategory" ColumnName="productCategory" />
+          <ScalarProperty Name="productName" ColumnName="productName" />
+          <ScalarProperty Name="shopId" ColumnName="shopId" />
+          <ScalarProperty Name="productQty" ColumnName="productQty" />
+          <ScalarProperty Name="productPrice" ColumnName="productPrice" />
+          <ScalarProperty Name="productDescription" ColumnName="productDescription" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="productID" ColumnName="productID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transaction">
+      <EntityTypeMapping TypeName="WheelyRevModel.Transaction">
+        <MappingFragment StoreEntitySet="Transaction">
+          <ScalarProperty Name="customerCash" ColumnName="customerCash" />
+          <ScalarProperty Name="shopName" ColumnName="shopName" />
+          <ScalarProperty Name="customerAddress" ColumnName="customerAddress" />
+          <ScalarProperty Name="customerContact" ColumnName="customerContact" />
+          <ScalarProperty Name="datePurchase" ColumnName="datePurchase" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="productPrice" ColumnName="productPrice" />
+          <ScalarProperty Name="productQuantity" ColumnName="productQuantity" />
+          <ScalarProperty Name="productName" ColumnName="productName" />
+          <ScalarProperty Name="shopID" ColumnName="shopID" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="productID" ColumnName="productID" />
+          <ScalarProperty Name="transactionID" ColumnName="transactionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_BuyNow" FunctionName="WheelyRevModel.Store.sp_BuyNow">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WheelyRevModel.sp_BuyNow_Result">
+          <ScalarProperty Name="productId" ColumnName="productId" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="productName" ColumnName="productName" />
+          <ScalarProperty Name="productDescription" ColumnName="productDescription" />
+          <ScalarProperty Name="productQty" ColumnName="productQty" />
+          <ScalarProperty Name="productPrice" ColumnName="productPrice" />
+          <ScalarProperty Name="shopId" ColumnName="shopId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_UpdateQty" FunctionName="WheelyRevModel.Store.sp_UpdateQty" />
+    <EntitySetMapping Name="Cart">
+      <EntityTypeMapping TypeName="WheelyRevModel.Cart">
+        <MappingFragment StoreEntitySet="Cart">
+          <ScalarProperty Name="statusId" ColumnName="statusId" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="shopId" ColumnName="shopId" />
+          <ScalarProperty Name="productID" ColumnName="productID" />
+          <ScalarProperty Name="cartId" ColumnName="cartId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Status">
+      <EntityTypeMapping TypeName="WheelyRevModel.Status">
+        <MappingFragment StoreEntitySet="Status">
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+          <ScalarProperty Name="statusId" ColumnName="statusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_GetStatus">
+      <EntityTypeMapping TypeName="WheelyRevModel.vw_GetStatus">
+        <MappingFragment StoreEntitySet="vw_GetStatus">
+          <ScalarProperty Name="Order_status" ColumnName="Order_status" />
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+          <ScalarProperty Name="statusId" ColumnName="statusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_CartItem">
+      <EntityTypeMapping TypeName="WheelyRevModel.vw_CartItem">
+        <MappingFragment StoreEntitySet="vw_CartItem">
+          <ScalarProperty Name="shopAddress" ColumnName="shopAddress" />
+          <ScalarProperty Name="contact" ColumnName="contact" />
+          <ScalarProperty Name="shopName" ColumnName="shopName" />
+          <ScalarProperty Name="shopId" ColumnName="shopId" />
+          <ScalarProperty Name="productPrice" ColumnName="productPrice" />
+          <ScalarProperty Name="productCategory" ColumnName="productCategory" />
+          <ScalarProperty Name="productName" ColumnName="productName" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="totalQuantity" ColumnName="totalQuantity" />
+          <ScalarProperty Name="productID" ColumnName="productID" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_MergeQuantity" FunctionName="WheelyRevModel.Store.sp_MergeQuantity" />
+  </EntityContainerMapping>
+</Mapping>

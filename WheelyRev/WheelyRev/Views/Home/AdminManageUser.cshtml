@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WheelyRev.Models.Users>
+
+@{
+    ViewBag.Title = "AdminManageUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Manage User</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AdminCreate")
+</p>
+
+@if (!String.IsNullOrEmpty(TempData["Msg"] as String))
+{
+    <div class="alert alert-success">@TempData["Msg"]</div>
+}
+<table class="table">
+    <tr>
+        <th>
+            User ID
+        </th>
+        <th>
+            Username
+        </th>
+        <th>
+            Password
+        </th>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+    @{int i = 1; }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.userId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "AdminEdit", new { id = item.userId }) |
+                @Html.ActionLink("Details", "AdminDetails", new { id = item.userId }) |
+                @Html.ActionLink("Delete", "AdminDelete", new { id = item.userId })
+            </td>
+        </tr>
+        i++;
+    }
+
+</table>

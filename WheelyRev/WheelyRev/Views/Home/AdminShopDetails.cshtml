@@ -1,0 +1,99 @@
+﻿@model WheelyRev.Models.Shops
+
+@{
+    ViewBag.Title = "AdminShopDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>AdminShopDetails</h2>
+
+<div>
+    <h4>Shops</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.shopId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shopId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shopProfile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shopProfile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shopName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shopName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shopAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shopAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shopCity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shopCity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shopState)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shopState)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shopPostalCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shopPostalCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shopDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shopDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contact)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contact)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.userId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "AdminManageShop")
+</p>

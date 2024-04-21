@@ -1,0 +1,178 @@
+﻿@model WheelyRev.Models.sp_BuyNow_Result
+@{
+    ViewBag.Title = "BuyNow";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Include SweetAlert CSS and JavaScript files -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+<div class="product-to-buy">
+    @*<form id="purchaseForm" action="@Url.Action("Purchase", "BuyNow")" method="post">*@
+        @*@Html.HiddenFor(m => m.productId)*@
+        @Html.Hidden("productId", (int)Session["productId"])
+        @*@Html.Hidden("userId", (int)Session["UserId"])*@
+        @Html.Hidden("shopId", (int)Session["shopId"])
+
+       <div class="row">
+            <div class="col-md-6">
+                <img src="~/Images/@Model.ImagePath" class="img-responsive" alt="Product Image">
+            </div>
+            <div class="col-md-6"> 
+                <div class="product_info">
+                    <div class="Product_Header">
+                        <h2>@Model.productName</h2>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="Product_Price">
+                                <h1 id="productPrice">₱@Model.productPrice.ToString("f2")</h1>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <p>Available: <span id="availableQuantity">@Model.productQty</span></p>
+                        </div>
+
+                    </div>
+
+                    <div class="Product_Description">
+                        <p>@Model.productDescription</p>
+                    </div>
+
+                    <hr />
+                    <div class="Contact_info">
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="contactNumber" name="contactNumber" placeholder="Enter contact number" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="transact_button">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="Product_Quantity">
+                                <div class="input-group custom-input-group">
+                                    <div class="wrapper">
+                                        <span class="minus" id="minusQuantity">-</span> @*Minus the quantity*@ 
+                                        <span class="num" id="quantityInput" name="quantity">1</span>  @*Display the quantity input sa user*@
+                                        <span class="plus" id="addQuantity">+</span> @*Add the quantity*@
+                                    </div>
+                                    <input type="hidden" id="quantityHidden" name="quantity" value="1">
+                                </div>
+                            </div>
+                            <div class="Product_Purchase">
+                                <button type="button" class="custom-btn custom-btn-outline-orange" onclick="showPaymentPrompt('@Model.productId', '@Model.shopId', '@Model.productName', '@Model.productPrice')">Purchase</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <hr />
+                <div class="total-section">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="totalText">
+                            <h1>Total: </h1>
+                        </div>
+                        <div class="DisplayTotal-section">
+                            <span id="totalDisplay" name="total">₱@Model.productPrice.ToString("f2")</span>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    @*</form>*@
+</div>
+<link href="~/Content/ProductToBuy.css" rel="stylesheet" />
+<link href="~/Content/QuantityButton.css" rel="stylesheet" />
+<script src="~/Ttemplates/Quantity.js"></script>
+
+<script>
+    function showPaymentPrompt(productId, shopId, productName, productPrice) {
+    console.log("showPaymentPrompt function called."); // Add this line for debugging 1
+
+    var contact_Number = document.getElementById("contactNumber").value;
+    var getAddress = document.getElementById("address").value;
+
+    // If Null ang contact number og ang Address
+    if (!contact_Number || !getAddress){
+        swal("Error!", "Please fill up the required fields", "error");
+    } else {
+        var quantity = parseInt(document.getElementById("quantityInput").innerText);
+        console.log(quantity); // Add this line for debugging 2
+
+        var total = parseFloat(productPrice) * parseFloat(quantity);
+        swal({
+            title: "Enter Payment",
+            text: "Product: " + productName + "\nPrice: ₱" + parseFloat(productPrice).toFixed(2) + "\nQuantity: " + quantity + "\nTotal: ₱" + total.toFixed(2),
+            content: {
+                element: "input",
+                attributes: {
+                    type: "number",
+                    placeholder: "Enter amount",
+                }
+            },
+            buttons: {
+                cancel: true,
+                confirm: "Pay"
+            },
+        })
+        .then((value) => {
+            if (value !== null) {
+                var quantity = document.getElementById("quantityInput").textContent;
+
+                console.log("Payment value entered:", value); // Add this line for debugging 3
+                console.log(contact_Number + "\n" + getAddress); // Add this line for debugging 4
+
+                if (parseFloat(value) < total) {
+                    return swal("Payment amount insufficient.", "Please enter enough to cover the total.", "error")
+                    .then(() => showPaymentPrompt(productId, shopId, productName, productPrice));
+                } else {
+                    purchase(productId, shopId, contact_Number, getAddress, parseInt(quantity), parseInt(value), productName, productPrice, total);
+                }
+            } else {
+                // User clicked cancel or closed the dialog
+                swal("Action canceled.");
+            }
+        });
+    }
+}
+    function purchase(productId, shopId, contact_Number, getAddress, quantity, cash, productName, productPrice, total) {
+        console.log("You are in purchase function"); // Add this line for debugging 5
+
+        $.ajax({
+            url: '@Url.Action("Purchase", "BuyNow")',
+            type: 'POST',
+            data: {
+                productID: productId,
+                shopId: shopId,
+                contactNumber: contact_Number,
+                address: getAddress,
+                quantity: quantity,
+                cash: cash
+            },
+            success: function (response) {
+                if (response.success) {
+                    swal("Success!", response.message, "success").then(() => {
+                        window.location.href = '@Url.Action("Index", "Home")';
+                    });
+                } else {
+                    swal("Error!", response.message, "error");
+                }
+            },
+            error: function () {
+                console.log("You are in error: function()"); // Add this line for debugging 6
+
+                return swal("Error!", "Please enter a valid number.", "error")
+                .then(() => showPaymentPrompt(productId, shopId, productName, productPrice, productName));
+            }
+        });
+    }
+</script>

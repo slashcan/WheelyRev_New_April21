@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WheelyRevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cart">
+    <Key>
+      <PropertyRef Name="cartId" />
+    </Key>
+    <Property Name="cartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="productID" Type="int" />
+    <Property Name="shopId" Type="int" />
+    <Property Name="userId" Type="int" />
+    <Property Name="quantity" Type="int" />
+    <Property Name="statusId" Type="int" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="productID" />
+    </Key>
+    <Property Name="productID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ImagePath" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="productName" Type="nvarchar" MaxLength="50" />
+    <Property Name="productDescription" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="productPrice" Type="money" Nullable="false" />
+    <Property Name="productQty" Type="int" Nullable="false" />
+    <Property Name="productCategory" Type="nvarchar" MaxLength="50" />
+    <Property Name="shopId" Type="int" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="roleId" />
+    </Key>
+    <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="roleName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Shops">
+    <Key>
+      <PropertyRef Name="shopId" />
+    </Key>
+    <Property Name="shopId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="shopProfile" Type="nvarchar" MaxLength="255" />
+    <Property Name="shopName" Type="nvarchar" MaxLength="50" />
+    <Property Name="shopAddress" Type="nvarchar" MaxLength="50" />
+    <Property Name="shopCity" Type="nvarchar" MaxLength="50" />
+    <Property Name="shopState" Type="nvarchar" MaxLength="50" />
+    <Property Name="shopPostalCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="shopDescription" Type="nvarchar" MaxLength="255" />
+    <Property Name="contact" Type="nvarchar" MaxLength="50" />
+    <Property Name="userId" Type="int" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="statusId" />
+    </Key>
+    <Property Name="statusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderStatus" Type="int" />
+  </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="transactionID" />
+    </Key>
+    <Property Name="transactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="productID" Type="int" />
+    <Property Name="userID" Type="int" />
+    <Property Name="shopID" Type="int" />
+    <Property Name="shopName" Type="nvarchar" MaxLength="50" />
+    <Property Name="productName" Type="nvarchar" MaxLength="255" />
+    <Property Name="productQuantity" Type="int" />
+    <Property Name="productPrice" Type="money" />
+    <Property Name="customerContact" Type="nvarchar" MaxLength="50" />
+    <Property Name="customerAddress" Type="nvarchar" MaxLength="255" />
+    <Property Name="customerCash" Type="money" />
+    <Property Name="Total" Type="money" />
+    <Property Name="datePurchase" Type="date" />
+  </EntityType>
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="UserRoles_ID" />
+    </Key>
+    <Property Name="UserRoles_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="roleId" Type="int" />
+    <Property Name="userId" Type="int" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="50" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" />
+    <Property Name="firstname" Type="nvarchar" MaxLength="50" />
+    <Property Name="lastname" Type="nvarchar" MaxLength="50" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" />
+    <Property Name="age" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WheelyRev.dbo.vw_CartItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_CartItem">
+    <Key>
+      <PropertyRef Name="ImagePath" />
+      <PropertyRef Name="productPrice" />
+      <PropertyRef Name="shopId" />
+    </Key>
+    <Property Name="userId" Type="int" />
+    <Property Name="productID" Type="int" />
+    <Property Name="totalQuantity" Type="int" />
+    <Property Name="ImagePath" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="productName" Type="nvarchar" MaxLength="50" />
+    <Property Name="productCategory" Type="nvarchar" MaxLength="50" />
+    <Property Name="productPrice" Type="money" Nullable="false" />
+    <Property Name="shopId" Type="int" Nullable="false" />
+    <Property Name="shopName" Type="nvarchar" MaxLength="50" />
+    <Property Name="contact" Type="nvarchar" MaxLength="50" />
+    <Property Name="shopAddress" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WheelyRev.dbo.vw_GetStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_GetStatus">
+    <Key>
+      <PropertyRef Name="statusId" />
+    </Key>
+    <Property Name="statusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderStatus" Type="int" />
+    <Property Name="Order_status" Type="varchar" MaxLength="7" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vw_UserRoles">
+    <Key>
+      <PropertyRef Name="UserRoles_ID" />
+      <PropertyRef Name="roleId" />
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="UserRoles_ID" Type="int" Nullable="false" />
+    <Property Name="roleId" Type="int" Nullable="false" />
+    <Property Name="roleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="userId" Type="int" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Cart_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="productID" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="productID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_Shops">
+    <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shops">
+        <PropertyRef Name="shopId" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="shopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="statusId" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="statusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cart_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Cart">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Products_Shops">
+    <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shops">
+        <PropertyRef Name="shopId" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="shopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Shops_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Shops" Type="Self.Shops" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Shops">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaction_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="productID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="productID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaction_Shops">
+    <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
+    <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shops">
+        <PropertyRef Name="shopId" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="shopID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaction_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRoles_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="UserRoles">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_BuyNow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="productId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_DefaultRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_MergeQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_setShopOwner" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userRoles_ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_UpdateQty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="quantity" Type="int" Mode="In" />
+    <Parameter Name="productID" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="WheelyRevModelStoreContainer">
+    <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Shops" EntityType="Self.Shops" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vw_CartItem" EntityType="Self.vw_CartItem" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_CartItem].[userId] AS [userId], 
+    [vw_CartItem].[productID] AS [productID], 
+    [vw_CartItem].[totalQuantity] AS [totalQuantity], 
+    [vw_CartItem].[ImagePath] AS [ImagePath], 
+    [vw_CartItem].[productName] AS [productName], 
+    [vw_CartItem].[productCategory] AS [productCategory], 
+    [vw_CartItem].[productPrice] AS [productPrice], 
+    [vw_CartItem].[shopId] AS [shopId], 
+    [vw_CartItem].[shopName] AS [shopName], 
+    [vw_CartItem].[contact] AS [contact], 
+    [vw_CartItem].[shopAddress] AS [shopAddress]
+    FROM [dbo].[vw_CartItem] AS [vw_CartItem]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_GetStatus" EntityType="Self.vw_GetStatus" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_GetStatus].[statusId] AS [statusId], 
+    [vw_GetStatus].[OrderStatus] AS [OrderStatus], 
+    [vw_GetStatus].[Order_status] AS [Order_status]
+    FROM [dbo].[vw_GetStatus] AS [vw_GetStatus]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_UserRoles" EntityType="Self.vw_UserRoles" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_UserRoles].[UserRoles_ID] AS [UserRoles_ID], 
+    [vw_UserRoles].[roleId] AS [roleId], 
+    [vw_UserRoles].[roleName] AS [roleName], 
+    [vw_UserRoles].[userId] AS [userId], 
+    [vw_UserRoles].[username] AS [username]
+    FROM [dbo].[vw_UserRoles] AS [vw_UserRoles]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Cart_Products" Association="Self.FK_Cart_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_Shops" Association="Self.FK_Cart_Shops">
+      <End Role="Shops" EntitySet="Shops" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_Status" Association="Self.FK_Cart_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cart_Users" Association="Self.FK_Cart_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Cart" EntitySet="Cart" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Products_Shops" Association="Self.FK_Products_Shops">
+      <End Role="Shops" EntitySet="Shops" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Shops_Users" Association="Self.FK_Shops_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Shops" EntitySet="Shops" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaction_Products" Association="Self.FK_Transaction_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Transaction" EntitySet="Transaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaction_Shops" Association="Self.FK_Transaction_Shops">
+      <End Role="Shops" EntitySet="Shops" />
+      <End Role="Transaction" EntitySet="Transaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaction_Users" Association="Self.FK_Transaction_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Transaction" EntitySet="Transaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRoles_Users" Association="Self.FK_UserRoles_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserRoles" EntitySet="UserRoles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

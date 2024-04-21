@@ -1,0 +1,136 @@
+﻿@model IEnumerable<WheelyRev.Models.Products>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+<style>
+    .seemore_bt:hover {
+        color: orangered;
+    }
+</style>
+
+<!-- Include SweetAlert CSS and JavaScript files -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+<div class="fashion_section">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="container">
+                <h1 class="fashion_taital">Products</h1>
+                <div class="row">
+                    @foreach (var product in Model)
+                    {
+                        <div class="col-lg-4 col-sm-4">
+                            <div class="product">
+                                <div class="box_main">
+                                    <div class="tshirt_img" data-target="p-@product.productID" onclick="showPreview('@product.ImagePath', '@product.productName', '@product.productDescription', '@product.productPrice', '@product.productID', '@product.shopId')">
+                                        <img src="~/Images/@product.ImagePath">
+                                        <br />
+                                        <div class="product-name"><p>@product.productName</p></div><br />
+                                        <div class="product-description">
+                                            @{
+                                                string description = product.productDescription;
+                                                if (description.Length > 30)
+                                                {
+                                                    description = description.Substring(0, 30);
+                                                }
+                                            }
+                                            @Html.Raw(description)<b> See more...</b>
+                                        </div>
+                                        <div class="product-price"><p>@product.productPrice.ToString("f")</p></div>
+                                    </div>
+                                    <div class="btn_main">
+                                        <div class="buy_bt">
+                                            <!-- Buy Now button -->
+                                            <form action="@Url.Action("BuyNow", "BuyNow")" method="post">
+                                                <input type="hidden" name="ProductId" value="@product.productID" />
+                                                <input type="hidden" name="ShopId" value="@product.shopId" />
+                                                <button type="submit" class="btn_buynow">Buy Now</button>
+                                            </form>
+                                        </div>
+                                        <div class="seemore_bt">
+                                            <!-- Add to Cart button -->
+                                            <button type="button" class="seemore_bt" style="background-color: transparent" onclick="addToCart('@product.productName', '@product.productID', '@product.shopId')">Add to cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="preview-container" class="preview-container">
+    <span class="close-preview" onclick="closePreview()">&times;</span>
+    <div class="products-preview" id="products-preview">
+        <img id="preview-img" src="" alt="Preview Image">
+        <!-- Preview content will be dynamically populated here -->
+    </div>
+</div>
+
+<link href="~/Ttemplates/PreviewProducts.css" rel="stylesheet" />
+<script src="~/Ttemplates/ProductPreview.js"></script>
+
+<script>
+    // Function to add product to cart using SweetAlert
+    
+    function addToCart(productName, productID, shopId) {
+        swal({
+            title: "Enter quantity for " + productName + ":",
+            content: {
+                element: "input",
+                attributes: {
+                    placeholder: "Quantity",
+                    type: "number",
+                    min: "1",
+                },
+            },
+            buttons: {
+                cancel: "Cancel",
+                confirm: {
+                    text: "Add to Cart",
+                    closeModal: false, // Prevent closing the dialog
+                },
+            },
+        }).then((value) => {
+            if (value) {
+                if (/^\d+$/.test(value) && !value.includes("-") && !value.includes(".") && value != "0") {
+                    console.log("if inside the if");
+                    addToCartAjax(value, productID, shopId);
+                } else {
+                    console.log("else inside the if");
+                    return swal("Invalid input").then(() => addToCart(productName, productID, shopId));
+                }
+            } 
+            else if (value == "" && value == "0") {
+                console.log("else-if statement");
+                return swal("Empty").then(() => addToCart(productName, productID, shopId));
+            } else {
+                // User clicked cancel or closed the dialog
+                swal("Action canceled.");
+            }
+        });
+    }
+    function addToCartAjax(quantity, productID, shopId) {
+        $.ajax({
+            url: '@Url.Action("AddToCart", "Cart")',
+            type: 'POST',
+            data: {
+                quantity: quantity,
+                productID: productID,
+                shopId: shopId
+            },
+            success: function (response) {
+                swal("Success!", response.message, "success");
+            },
+            error: function (xhr, status, error) {
+                swal("Error!" , error, "error");
+            }
+        });
+    }
+</script>

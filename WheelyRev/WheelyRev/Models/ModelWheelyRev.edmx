@@ -1,0 +1,952 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WheelyRevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="cartId" />
+          </Key>
+          <Property Name="cartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productID" Type="int" />
+          <Property Name="shopId" Type="int" />
+          <Property Name="userId" Type="int" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="statusId" Type="int" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="productName" Type="nvarchar" MaxLength="50" />
+          <Property Name="productDescription" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="productPrice" Type="money" Nullable="false" />
+          <Property Name="productQty" Type="int" Nullable="false" />
+          <Property Name="productCategory" Type="nvarchar" MaxLength="50" />
+          <Property Name="shopId" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roleName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Shops">
+          <Key>
+            <PropertyRef Name="shopId" />
+          </Key>
+          <Property Name="shopId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="shopProfile" Type="nvarchar" MaxLength="255" />
+          <Property Name="shopName" Type="nvarchar" MaxLength="50" />
+          <Property Name="shopAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="shopCity" Type="nvarchar" MaxLength="50" />
+          <Property Name="shopState" Type="nvarchar" MaxLength="50" />
+          <Property Name="shopPostalCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="shopDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="contact" Type="nvarchar" MaxLength="50" />
+          <Property Name="userId" Type="int" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="statusId" />
+          </Key>
+          <Property Name="statusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderStatus" Type="int" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="transactionID" />
+          </Key>
+          <Property Name="transactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productID" Type="int" />
+          <Property Name="userID" Type="int" />
+          <Property Name="shopID" Type="int" />
+          <Property Name="shopName" Type="nvarchar" MaxLength="50" />
+          <Property Name="productName" Type="nvarchar" MaxLength="255" />
+          <Property Name="productQuantity" Type="int" />
+          <Property Name="productPrice" Type="money" />
+          <Property Name="customerContact" Type="nvarchar" MaxLength="50" />
+          <Property Name="customerAddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="customerCash" Type="money" />
+          <Property Name="Total" Type="money" />
+          <Property Name="datePurchase" Type="date" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="UserRoles_ID" />
+          </Key>
+          <Property Name="UserRoles_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roleId" Type="int" />
+          <Property Name="userId" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="firstname" Type="nvarchar" MaxLength="50" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="age" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'WheelyRev.dbo.vw_CartItem' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_CartItem">
+          <Key>
+            <PropertyRef Name="ImagePath" />
+            <PropertyRef Name="productPrice" />
+            <PropertyRef Name="shopId" />
+          </Key>
+          <Property Name="userId" Type="int" />
+          <Property Name="productID" Type="int" />
+          <Property Name="totalQuantity" Type="int" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="productName" Type="nvarchar" MaxLength="50" />
+          <Property Name="productCategory" Type="nvarchar" MaxLength="50" />
+          <Property Name="productPrice" Type="money" Nullable="false" />
+          <Property Name="shopId" Type="int" Nullable="false" />
+          <Property Name="shopName" Type="nvarchar" MaxLength="50" />
+          <Property Name="contact" Type="nvarchar" MaxLength="50" />
+          <Property Name="shopAddress" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'WheelyRev.dbo.vw_GetStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_GetStatus">
+          <Key>
+            <PropertyRef Name="statusId" />
+          </Key>
+          <Property Name="statusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderStatus" Type="int" />
+          <Property Name="Order_status" Type="varchar" MaxLength="7" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_UserRoles">
+          <Key>
+            <PropertyRef Name="UserRoles_ID" />
+            <PropertyRef Name="roleId" />
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="UserRoles_ID" Type="int" Nullable="false" />
+          <Property Name="roleId" Type="int" Nullable="false" />
+          <Property Name="roleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Cart_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_Shops">
+          <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="shopId" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="shopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="statusId" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="statusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Shops">
+          <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="shopId" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="shopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shops_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Shops" Type="Self.Shops" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Shops">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_Shops">
+          <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="shopId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="shopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_BuyNow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="productId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_DefaultRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_MergeQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_setShopOwner" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userRoles_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_UpdateQty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="quantity" Type="int" Mode="In" />
+          <Parameter Name="productID" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="WheelyRevModelStoreContainer">
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shops" EntityType="Self.Shops" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_CartItem" EntityType="Self.vw_CartItem" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_CartItem].[userId] AS [userId], 
+    [vw_CartItem].[productID] AS [productID], 
+    [vw_CartItem].[totalQuantity] AS [totalQuantity], 
+    [vw_CartItem].[ImagePath] AS [ImagePath], 
+    [vw_CartItem].[productName] AS [productName], 
+    [vw_CartItem].[productCategory] AS [productCategory], 
+    [vw_CartItem].[productPrice] AS [productPrice], 
+    [vw_CartItem].[shopId] AS [shopId], 
+    [vw_CartItem].[shopName] AS [shopName], 
+    [vw_CartItem].[contact] AS [contact], 
+    [vw_CartItem].[shopAddress] AS [shopAddress]
+    FROM [dbo].[vw_CartItem] AS [vw_CartItem]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_GetStatus" EntityType="Self.vw_GetStatus" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_GetStatus].[statusId] AS [statusId], 
+    [vw_GetStatus].[OrderStatus] AS [OrderStatus], 
+    [vw_GetStatus].[Order_status] AS [Order_status]
+    FROM [dbo].[vw_GetStatus] AS [vw_GetStatus]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vw_UserRoles" EntityType="Self.vw_UserRoles" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_UserRoles].[UserRoles_ID] AS [UserRoles_ID], 
+    [vw_UserRoles].[roleId] AS [roleId], 
+    [vw_UserRoles].[roleName] AS [roleName], 
+    [vw_UserRoles].[userId] AS [userId], 
+    [vw_UserRoles].[username] AS [username]
+    FROM [dbo].[vw_UserRoles] AS [vw_UserRoles]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Cart_Products" Association="Self.FK_Cart_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cart_Shops" Association="Self.FK_Cart_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cart_Status" Association="Self.FK_Cart_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cart_Users" Association="Self.FK_Cart_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Shops" Association="Self.FK_Products_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shops_Users" Association="Self.FK_Shops_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Shops" EntitySet="Shops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_Products" Association="Self.FK_Transaction_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_Shops" Association="Self.FK_Transaction_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_Users" Association="Self.FK_Transaction_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Users" Association="Self.FK_UserRoles_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WheelyRevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRoles" Relationship="WheelyRevModel.FK_UserRoles_Roles" FromRole="Roles" ToRole="UserRoles" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="age" Type="Int32" />
+          <NavigationProperty Name="UserRoles" Relationship="WheelyRevModel.FK_UserRoles_Users" FromRole="Users" ToRole="UserRoles" />
+          <NavigationProperty Name="Shops" Relationship="WheelyRevModel.FK_Shops_Users" FromRole="Users" ToRole="Shops" />
+          <NavigationProperty Name="Transaction" Relationship="WheelyRevModel.FK_Transaction_Users" FromRole="Users" ToRole="Transaction" />
+          <NavigationProperty Name="Cart" Relationship="WheelyRevModel.FK_Cart_Users" FromRole="Users" ToRole="Cart" />
+        </EntityType>
+        <EntityContainer Name="WheelyRevEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="UserRoles" EntityType="WheelyRevModel.UserRoles" />
+          <EntitySet Name="vw_UserRoles" EntityType="WheelyRevModel.vw_UserRoles" />
+          <AssociationSet Name="FK_UserRoles_Roles" Association="WheelyRevModel.FK_UserRoles_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Users" Association="WheelyRevModel.FK_UserRoles_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <FunctionImport Name="sp_DefaultRole">
+          <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Shops" EntityType="WheelyRevModel.Shops" />
+          <AssociationSet Name="FK_Shops_Users" Association="WheelyRevModel.FK_Shops_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Shops" EntitySet="Shops" />
+          </AssociationSet>
+          <FunctionImport Name="sp_UpdateRole">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+            <Parameter Name="roleId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_UpdateShop">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+            <Parameter Name="roleId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_setShopOwner">
+          <Parameter Name="userRoles_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Products" EntityType="WheelyRevModel.Products" />
+          <AssociationSet Name="FK_Products_Shops" Association="WheelyRevModel.FK_Products_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <FunctionImport Name="sp_ProductToBuy" ReturnType="Collection(WheelyRevModel.sp_ProductToBuy_Result)">
+          <Parameter Name="productID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Purchase" ReturnType="Collection(WheelyRevModel.sp_Purchase_Result)">
+          <Parameter Name="productID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Transaction" EntityType="WheelyRevModel.Transaction" />
+          <AssociationSet Name="FK_Transaction_Products" Association="WheelyRevModel.FK_Transaction_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_Shops" Association="WheelyRevModel.FK_Transaction_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transaction_Users" Association="WheelyRevModel.FK_Transaction_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Transaction" EntitySet="Transaction" />
+          </AssociationSet>
+          <FunctionImport Name="sp_BuyNow" ReturnType="Collection(WheelyRevModel.sp_BuyNow_Result)">
+          <Parameter Name="productId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_UpdateQty">
+            <Parameter Name="quantity" Mode="In" Type="Int32" />
+            <Parameter Name="productID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Cart" EntityType="WheelyRevModel.Cart" />
+          <AssociationSet Name="FK_Cart_Products" Association="WheelyRevModel.FK_Cart_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cart_Shops" Association="WheelyRevModel.FK_Cart_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cart_Users" Association="WheelyRevModel.FK_Cart_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <EntitySet Name="Status" EntityType="WheelyRevModel.Status" />
+          <EntitySet Name="vw_GetStatus" EntityType="WheelyRevModel.vw_GetStatus" />
+          <AssociationSet Name="FK_Cart_Status" Association="WheelyRevModel.FK_Cart_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <FunctionImport Name="sp_CartDisplay" ReturnType="Collection(WheelyRevModel.sp_CartDisplay_Result)" />
+          <EntitySet Name="vw_CartItem" EntityType="WheelyRevModel.vw_CartItem" />
+          <FunctionImport Name="sp_MergeQuantity" ReturnType="Collection(Int32)">
+          <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="UserRoles_ID" />
+          </Key>
+          <Property Name="UserRoles_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roleId" Type="Int32" />
+          <Property Name="userId" Type="Int32" />
+          <NavigationProperty Name="Roles" Relationship="WheelyRevModel.FK_UserRoles_Roles" FromRole="UserRoles" ToRole="Roles" />
+          <NavigationProperty Name="Users" Relationship="WheelyRevModel.FK_UserRoles_Users" FromRole="UserRoles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="vw_UserRoles">
+          <Key>
+            <PropertyRef Name="UserRoles_ID" />
+            <PropertyRef Name="roleId" />
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="UserRoles_ID" Type="Int32" Nullable="false" />
+          <Property Name="roleId" Type="Int32" Nullable="false" />
+          <Property Name="roleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_UserRoles_Roles">
+          <End Type="WheelyRevModel.Roles" Role="Roles" Multiplicity="0..1" />
+          <End Type="WheelyRevModel.UserRoles" Role="UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="roleId" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_Users">
+          <End Type="WheelyRevModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="WheelyRevModel.UserRoles" Role="UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Shops">
+          <Key>
+            <PropertyRef Name="shopId" />
+          </Key>
+          <Property Name="shopId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="shopAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userId" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="WheelyRevModel.FK_Shops_Users" FromRole="Shops" ToRole="Users" />
+          <NavigationProperty Name="Products" Relationship="WheelyRevModel.FK_Products_Shops" FromRole="Shops" ToRole="Products" />
+          <Property Name="shopProfile" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="shopCity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="shopState" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="shopPostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="shopDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Transaction" Relationship="WheelyRevModel.FK_Transaction_Shops" FromRole="Shops" ToRole="Transaction" />
+          <NavigationProperty Name="Cart" Relationship="WheelyRevModel.FK_Cart_Shops" FromRole="Shops" ToRole="Cart" />
+        </EntityType>
+        <Association Name="FK_Shops_Users">
+          <End Type="WheelyRevModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="WheelyRevModel.Shops" Role="Shops" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Shops">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="productDescription" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="productPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="productQty" Type="Int32" Nullable="false" />
+          <Property Name="shopId" Type="Int32" />
+          <NavigationProperty Name="Shops" Relationship="WheelyRevModel.FK_Products_Shops" FromRole="Products" ToRole="Shops" />
+          <Property Name="productName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="productCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Transaction" Relationship="WheelyRevModel.FK_Transaction_Products" FromRole="Products" ToRole="Transaction" />
+          <NavigationProperty Name="Cart" Relationship="WheelyRevModel.FK_Cart_Products" FromRole="Products" ToRole="Cart" />
+        </EntityType>
+        <Association Name="FK_Products_Shops">
+          <End Type="WheelyRevModel.Shops" Role="Shops" Multiplicity="0..1" />
+          <End Type="WheelyRevModel.Products" Role="Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="shopId" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="shopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_ProductToBuy_Result">
+          <Property Type="String" Name="ImagePath" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="productName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="productDescription" Nullable="false" MaxLength="255" />
+          <Property Type="Decimal" Name="productPrice" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="sp_Purchase_Result">
+          <Property Type="Int32" Name="productId" Nullable="false" />
+          <Property Type="String" Name="ImagePath" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="productName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="productDescription" Nullable="false" MaxLength="255" />
+          <Property Type="Decimal" Name="productPrice" Nullable="false" Precision="19" />
+        </ComplexType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="transactionID" />
+          </Key>
+          <Property Name="transactionID" Type="Int32" Nullable="false" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="shopID" Type="Int32" />
+          <Property Name="productName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="productQuantity" Type="Int32" />
+          <Property Name="productPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="datePurchase" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Products" Relationship="WheelyRevModel.FK_Transaction_Products" FromRole="Transaction" ToRole="Products" />
+          <NavigationProperty Name="Shops" Relationship="WheelyRevModel.FK_Transaction_Shops" FromRole="Transaction" ToRole="Shops" />
+          <NavigationProperty Name="Users" Relationship="WheelyRevModel.FK_Transaction_Users" FromRole="Transaction" ToRole="Users" />
+          <Property Name="customerContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="customerAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="customerCash" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <Association Name="FK_Transaction_Products">
+          <End Type="WheelyRevModel.Products" Role="Products" Multiplicity="0..1" />
+          <End Type="WheelyRevModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_Shops">
+          <End Type="WheelyRevModel.Shops" Role="Shops" Multiplicity="0..1" />
+          <End Type="WheelyRevModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="shopId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="shopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transaction_Users">
+          <End Type="WheelyRevModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="WheelyRevModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_BuyNow_Result">
+          <Property Type="Int32" Name="productId" Nullable="false" />
+          <Property Type="String" Name="ImagePath" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="productName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="productDescription" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="productQty" Nullable="false" />
+          <Property Type="Decimal" Name="productPrice" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="shopId" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="cartId" />
+          </Key>
+          <Property Name="cartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="shopId" Type="Int32" />
+          <Property Name="userId" Type="Int32" />
+          <NavigationProperty Name="Products" Relationship="WheelyRevModel.FK_Cart_Products" FromRole="Cart" ToRole="Products" />
+          <NavigationProperty Name="Shops" Relationship="WheelyRevModel.FK_Cart_Shops" FromRole="Cart" ToRole="Shops" />
+          <NavigationProperty Name="Users" Relationship="WheelyRevModel.FK_Cart_Users" FromRole="Cart" ToRole="Users" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="statusId" Type="Int32" />
+          <NavigationProperty Name="Status" Relationship="WheelyRevModel.FK_Cart_Status" FromRole="Cart" ToRole="Status" />
+        </EntityType>
+        <Association Name="FK_Cart_Products">
+          <End Type="WheelyRevModel.Products" Role="Products" Multiplicity="0..1" />
+          <End Type="WheelyRevModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_Shops">
+          <End Type="WheelyRevModel.Shops" Role="Shops" Multiplicity="0..1" />
+          <End Type="WheelyRevModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="shopId" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="shopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_Users">
+          <End Type="WheelyRevModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="WheelyRevModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="statusId" />
+          </Key>
+          <Property Name="statusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderStatus" Type="Int32" />
+          <NavigationProperty Name="Cart" Relationship="WheelyRevModel.FK_Cart_Status" FromRole="Status" ToRole="Cart" />
+        </EntityType>
+        <EntityType Name="vw_GetStatus">
+          <Key>
+            <PropertyRef Name="statusId" />
+          </Key>
+          <Property Name="statusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderStatus" Type="Int32" />
+          <Property Name="Order_status" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Cart_Status">
+          <End Type="WheelyRevModel.Status" Role="Status" Multiplicity="0..1" />
+          <End Type="WheelyRevModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="statusId" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="statusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_CartDisplay_Result">
+          <Property Type="Int32" Name="userId" Nullable="true" />
+          <Property Type="Int32" Name="productID" Nullable="true" />
+          <Property Type="Int32" Name="totalQuantity" Nullable="true" />
+          <Property Type="String" Name="ImagePath" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="productName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="productCategory" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="productPrice" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="shopId" Nullable="false" />
+          <Property Type="String" Name="shopName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="contact" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="shopAddress" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="vw_CartItem">
+          <Key>
+            <PropertyRef Name="ImagePath" />
+            <PropertyRef Name="productPrice" />
+            <PropertyRef Name="shopId" />
+          </Key>
+          <Property Name="userId" Type="Int32" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="totalQuantity" Type="Int32" />
+          <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="productName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="productCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="productPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="shopId" Type="Int32" Nullable="false" />
+          <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="shopAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WheelyRevModelStoreContainer" CdmEntityContainer="WheelyRevEntities">
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="WheelyRevModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="WheelyRevModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="age" ColumnName="age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="WheelyRevModel.UserRoles">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="UserRoles_ID" ColumnName="UserRoles_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_UserRoles">
+            <EntityTypeMapping TypeName="WheelyRevModel.vw_UserRoles">
+              <MappingFragment StoreEntitySet="vw_UserRoles">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="UserRoles_ID" ColumnName="UserRoles_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_DefaultRole" FunctionName="WheelyRevModel.Store.sp_DefaultRole" />
+          <EntitySetMapping Name="Shops">
+            <EntityTypeMapping TypeName="WheelyRevModel.Shops">
+              <MappingFragment StoreEntitySet="Shops">
+                <ScalarProperty Name="shopDescription" ColumnName="shopDescription" />
+                <ScalarProperty Name="shopPostalCode" ColumnName="shopPostalCode" />
+                <ScalarProperty Name="shopState" ColumnName="shopState" />
+                <ScalarProperty Name="shopCity" ColumnName="shopCity" />
+                <ScalarProperty Name="shopProfile" ColumnName="shopProfile" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="shopAddress" ColumnName="shopAddress" />
+                <ScalarProperty Name="shopName" ColumnName="shopName" />
+                <ScalarProperty Name="shopId" ColumnName="shopId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_setShopOwner" FunctionName="WheelyRevModel.Store.sp_setShopOwner" />
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="WheelyRevModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="productCategory" ColumnName="productCategory" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="shopId" ColumnName="shopId" />
+                <ScalarProperty Name="productQty" ColumnName="productQty" />
+                <ScalarProperty Name="productPrice" ColumnName="productPrice" />
+                <ScalarProperty Name="productDescription" ColumnName="productDescription" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transaction">
+            <EntityTypeMapping TypeName="WheelyRevModel.Transaction">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="customerCash" ColumnName="customerCash" />
+                <ScalarProperty Name="shopName" ColumnName="shopName" />
+                <ScalarProperty Name="customerAddress" ColumnName="customerAddress" />
+                <ScalarProperty Name="customerContact" ColumnName="customerContact" />
+                <ScalarProperty Name="datePurchase" ColumnName="datePurchase" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="productPrice" ColumnName="productPrice" />
+                <ScalarProperty Name="productQuantity" ColumnName="productQuantity" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="shopID" ColumnName="shopID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="transactionID" ColumnName="transactionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_BuyNow" FunctionName="WheelyRevModel.Store.sp_BuyNow">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WheelyRevModel.sp_BuyNow_Result">
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="productDescription" ColumnName="productDescription" />
+                <ScalarProperty Name="productQty" ColumnName="productQty" />
+                <ScalarProperty Name="productPrice" ColumnName="productPrice" />
+                <ScalarProperty Name="shopId" ColumnName="shopId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_UpdateQty" FunctionName="WheelyRevModel.Store.sp_UpdateQty" />
+          <EntitySetMapping Name="Cart">
+            <EntityTypeMapping TypeName="WheelyRevModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="statusId" ColumnName="statusId" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="shopId" ColumnName="shopId" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="cartId" ColumnName="cartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="WheelyRevModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="statusId" ColumnName="statusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_GetStatus">
+            <EntityTypeMapping TypeName="WheelyRevModel.vw_GetStatus">
+              <MappingFragment StoreEntitySet="vw_GetStatus">
+                <ScalarProperty Name="Order_status" ColumnName="Order_status" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="statusId" ColumnName="statusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_CartItem">
+            <EntityTypeMapping TypeName="WheelyRevModel.vw_CartItem">
+              <MappingFragment StoreEntitySet="vw_CartItem">
+                <ScalarProperty Name="shopAddress" ColumnName="shopAddress" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="shopName" ColumnName="shopName" />
+                <ScalarProperty Name="shopId" ColumnName="shopId" />
+                <ScalarProperty Name="productPrice" ColumnName="productPrice" />
+                <ScalarProperty Name="productCategory" ColumnName="productCategory" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="totalQuantity" ColumnName="totalQuantity" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_MergeQuantity" FunctionName="WheelyRevModel.Store.sp_MergeQuantity" />
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

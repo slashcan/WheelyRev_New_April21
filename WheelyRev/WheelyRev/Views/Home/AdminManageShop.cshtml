@@ -1,0 +1,82 @@
+﻿@model IEnumerable<WheelyRev.Models.Shops>
+
+@{
+    ViewBag.Title = "AdminManageShop";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Manage Shop</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Shop ID
+        </th>
+        <th>
+            Shop Profile
+        </th>
+        <th>
+            Shop Name
+        </th>
+        <th>
+            Shop Address
+        </th>
+        <th>
+            City
+        </th>
+        <th>
+            State
+        </th>
+        <th>
+            Postal Code
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Contact
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.shopId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shopProfile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shopName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shopAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shopCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shopState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shopPostalCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shopDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.contact)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "AdminShopDetails", new { id = item.shopId }) |
+                @Html.ActionLink("Details", "AdminShopDetails", new { id = item.shopId }) |
+                @Html.ActionLink("Delete", "AdminShopDelete", new { id = item.shopId })
+            </td>
+        </tr>
+    }
+
+</table>

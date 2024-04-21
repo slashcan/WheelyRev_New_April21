@@ -1,0 +1,207 @@
+﻿@model IEnumerable<WheelyRev.Models.vw_CartItem>
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .minus:hover{
+        color: orangered;
+    }
+    .plus:hover{
+        color: orangered;
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+<link href="~/Ttemplates/Cart.css" rel="stylesheet" />
+<div class="topOfCard"></div>
+    <div class="card">
+        <div class="row">
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col"><h4><b>Shopping Cart</b></h4></div>
+                        <div class="col align-self-center text-right text-muted">@Model.Count() item(s)</div>
+                    </div>
+                </div>
+@foreach (var item in Model)
+{
+                <div class="row border-top border-bottom">
+                    <div class="row main align-items-center">
+                        <div class="col-2"><img class="img-fluid" src="~/Images/@item.ImagePath"></div>
+                        <div class="col">
+                            <div class="row text-muted">@item.productCategory</div>
+                            <div class="row">@item.productName</div>
+                        </div>
+                        <div class="col">
+                            @*<a href="#">-</a>*@
+                            @*<a href="#" class="border">@item.totalQuantity</a>*@
+                            @*<a href="#">+</a>*@
+                            <button class="minus" id="minusQuantity" style="margin-right: 5%; background-color: transparent; width: 10%; font-size: 20px;">-</button>
+                            <span class="num" id="quantityInput" name="quantity">@item.totalQuantity</span>
+                            <button class="plus" id="addQuantity" style="margin-left: 5%; background-color: transparent; width: 10%; font-size: 18px;">+</button>
+                        </div>
+                        <div class="col">
+
+                        @*Calculate the product price*@
+                        @{ 
+                            var total = (int)item.productPrice * (int)item.totalQuantity;
+                            string displayTotal = "₱ " + total.ToString("f");
+                        }
+                        @*@Html.Raw(displayTotal)*@
+                        <span class="displayTotal" id="displayTotal">@Html.Raw(displayTotal)</span> @*Display the cart product price*@
+                        <span class="close">&#10005;</span></div>
+                    </div>
+                </div>
+
+                <input class="hidden-value" type="hidden"
+                       data-product-id="@item.productID"
+                       data-shop-id="@item.shopId"
+                       data-shop-name="@item.shopName"
+                       data-product-name="@item.productName"
+                       data-total-quantity="@item.totalQuantity"
+                       data-product-price="@item.productPrice" />
+}
+
+            </div>
+            <div class="col-md-4 summary" style="background-color: #ddd">
+                <div><h5><b>Summary</b></h5></div>
+                <hr>
+                <div class="row">
+                    <div class="col" style="padding-left:0;">ITEM(s) @Model.Count()</div>
+                    <div class="col text-right">
+
+                        @{
+                            decimal totalSum = 0;
+                            foreach (var item in Model)
+                            {
+                                totalSum += (decimal)item.productPrice * (decimal)item.totalQuantity;
+                            }
+                        }
+                        ₱ @Html.Raw(totalSum.ToString("f"))
+
+                    </div>
+                </div>
+                <form>
+                    <p>Contact Number</p>
+                    <input type="text" class="text-muted" id="contactNumber" name="contactNumber" placeholder="Enter contact number" required>
+                    <p>Address</p>
+                    <input type="text" id="address" name="address" placeholder="Enter your address" required>
+                </form>
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                    <div class="col">TOTAL PRICE</div>
+                    <div class="col text-right">
+
+                        @*Calculate the TOTAL PRICE*@
+                        @{
+                            decimal CheckOut = 0;
+                            foreach (var item in Model)
+                            {
+                                CheckOut += (decimal)item.productPrice * (decimal)item.totalQuantity;
+                            }
+                        }
+                        ₱ @Html.Raw(CheckOut.ToString("f")) @*Display the TOTAL of ALL price*@
+
+                    </div>
+                </div>
+                <button type="button" id="btnCheckOut" class="btn" style="margin-bottom: 5%;" onclick="checkOut()">CHECKOUT</button>
+            </div>
+        </div>
+    </div>
+<script src="~/Ttemplates/CartQuantity.js"></script>
+<script>
+    function checkOut() {
+        var i = 0;
+        var items = [];
+        $('.hidden-value').each(function () {
+            var productId = $(this).data('product-id');
+            var shopId = $(this).data('shop-id');
+            var shopName = $(this).data('shop-name');
+            var productName = $(this).data('product-name');
+            var totalQuantity = $(this).data('total-quantity');
+            var productPrice = $(this).data('product-price');
+
+            //For debugging purposes
+            i++;
+            console.log("Iterate " + i);
+            console.log("productID " + productId);
+            console.log("shopID " + shopId);
+            console.log("Shop name " + shopName);
+            console.log("Product name " + productName);
+            console.log("Total Quantity " + totalQuantity);
+            console.log("Product price " + productPrice);
+            //End of debugging :)
+
+
+            items.push({
+                productId: productId,
+                shopId: shopId,
+                shopName: shopName,
+                productName: productName,
+                totalQuantity: totalQuantity,
+                productPrice: productPrice
+            });
+        });
+
+        var contactNumber = $('#contactNumber').val();
+        var address = $('#address').val();
+
+        if (!contactNumber || !address) {
+            swal("Error!", "Please fill up the required fields", "error");
+        }
+        else {
+            swal({
+                title: "Enter Payment",
+                text: "Total: ₱ " + @Html.Raw(CheckOut.ToString("f")),
+                content: {
+                    element: "input",
+                    attributes: {
+                        type: "number",
+                        placeholder: "Enter amount",
+                    }
+                },
+                buttons: {
+                    cancel: true,
+                    confirm: "Purchase"
+                }
+            }).then((value) => {
+                if (value !== null) {
+                    var totalAmount = @Html.Raw(CheckOut.ToString("f"));
+
+                    console.log("CASHHHH --------------------" + value);
+                    if (value < totalAmount) {
+                        swal("Error!", "Insufficient amount. Please enter the correct amount.", "error")
+                            .then(() => {
+                                checkOut();
+                            });
+                    } else {
+                        $.ajax({
+                            url: '@Url.Action("CheckOutAjax", "Cart")',
+                            type: 'POST',
+                            data: {
+                                items: items,
+                                contactNumber: contactNumber,
+                                address: address,
+                                cash: parseFloat(value)
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    swal("Success!", response.message, "success").then(() => {
+                                        window.location.href = '@Url.Action("Index", "Home")';
+                                    });
+                                } else {
+                                    swal("Error!", response.message, "error");
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    swal("Action canceled.");
+                }
+            });
+        }
+    }
+</script>

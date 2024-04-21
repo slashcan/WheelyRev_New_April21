@@ -1,0 +1,51 @@
+﻿.product-to-buy{
+    width: 100%; /* Make the container full width */
+    max-width: 1200px; /* Set maximum width */
+    margin: 0 auto; /* Center the container horizontally */
+    margin-top: 5%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 1%;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+}
+body{
+    background-color: #f0f0f0;
+}
+.product_info{
+    padding: 50px;
+}
+.product_info h2{
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+
+.custom-input-group {
+    width: 80%;
+}
+
+.custom-input-group .custom-form-control {
+    
+    height: 35px;
+}
+
+.custom-btn {
+    display: inline-block;
+    padding: 5px 20px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #f26522;
+    border-radius: 5px;
+    color: #f26522;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+    background-color: #f26522;
+    color: #fff;
+}

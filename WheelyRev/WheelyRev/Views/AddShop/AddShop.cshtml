@@ -1,0 +1,79 @@
+﻿@model WheelyRev.Models.Shops
+@{
+    ViewBag.Title = "AddShop";
+}
+
+<div class="AddShopBody">
+    @if (!String.IsNullOrEmpty(TempData["msg"] as String))
+    {
+        <div class="alert alert-success">@TempData["msg"] </div>
+        <div>
+            <p>User ID: @Session["UserRole_ID"]</p>
+        </div>
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.shopName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <label class="control-label col-md-2" style="font-family: Arial, sans-serif; font-size: 14px;">Shop name</label>
+                    @Html.EditorFor(model => model.shopName, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                    @Html.ValidationMessageFor(model => model.shopName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.shopDescription, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <label class="control-label col-md-2" style="font-family: Arial, sans-serif; font-size: 14px;">Description</label><br />
+                @Html.TextAreaFor(model => model.shopDescription, new { @class = "form-control", @rows = "3", @required = "required" })
+                @Html.ValidationMessageFor(model => model.shopDescription, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.shopAddress, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <label class="control-label col-md-2" style="font-family: Arial, sans-serif; font-size: 14px;">Address</label>
+                    @Html.EditorFor(model => model.shopAddress, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                    @Html.ValidationMessageFor(model => model.shopAddress, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.shopCity, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <label class="control-label col-md-2" style="font-family: Arial, sans-serif; font-size: 14px;">City</label>
+                    @Html.EditorFor(model => model.shopCity, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                    @Html.ValidationMessageFor(model => model.shopCity, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.shopState, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <label class="control-label col-md-2" style="font-family: Arial, sans-serif; font-size: 14px;">State</label>
+                    @Html.EditorFor(model => model.shopState, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                    @Html.ValidationMessageFor(model => model.shopState, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.shopPostalCode, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                 <label class="control-label col-md-2" style="font-family: Arial, sans-serif; font-size: 14px;">Postal code</label>
+                    @Html.EditorFor(model => model.shopPostalCode, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                    @Html.ValidationMessageFor(model => model.shopPostalCode, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.contact, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <label class="control-label col-md-2" style="font-family: Arial, sans-serif; font-size: 14px;">Contact number</label>
+                    @Html.EditorFor(model => model.contact, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                    @Html.ValidationMessageFor(model => model.contact, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                    <div class="btnCreateShop">
+                        <input type="submit" value="Create" class="btn btn-success btn-lg btn-block" />
+                    </div>
+            </div>
+        </div>
+    }
+</div>
+<link rel="stylesheet" href="~/Content/AddShopCss.css" />
