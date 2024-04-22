@@ -81,7 +81,8 @@
                                 totalSum += (decimal)item.productPrice * (decimal)item.totalQuantity;
                             }
                         }
-                        ₱ @Html.Raw(totalSum.ToString("f"))
+                        @*₱ @Html.Raw(totalSum.ToString("f"))*@
+                        <span class="totalSum" id="totalSum">₱ @Html.Raw(totalSum.ToString("f"))</span>
 
                     </div>
                 </div>
@@ -103,8 +104,8 @@
                                 CheckOut += (decimal)item.productPrice * (decimal)item.totalQuantity;
                             }
                         }
-                        ₱ @Html.Raw(CheckOut.ToString("f")) @*Display the TOTAL of ALL price*@
-
+                        @*₱ @Html.Raw(CheckOut.ToString("f")) Display the TOTAL of ALL price*@
+                        <span class="CheckOut" id="CheckOut">₱ @Html.Raw(CheckOut.ToString("f"))</span>
                     </div>
                 </div>
                 <button type="button" id="btnCheckOut" class="btn" style="margin-bottom: 5%;" onclick="checkOut()">CHECKOUT</button>
@@ -116,35 +117,36 @@
     function checkOut() {
         var i = 0;
         var items = [];
-        $('.hidden-value').each(function () {
-            var productId = $(this).data('product-id');
-            var shopId = $(this).data('shop-id');
-            var shopName = $(this).data('shop-name');
-            var productName = $(this).data('product-name');
-            var totalQuantity = $(this).data('total-quantity');
-            var productPrice = $(this).data('product-price');
+        //$('.hidden-value').each(function () {
+        //    var productId = $(this).data('product-id');
+        //    var shopId = $(this).data('shop-id');
+        //    var shopName = $(this).data('shop-name');
+        //    var productName = $(this).data('product-name');
+        //    var totalQuantity = $(this).data('total-quantity');
+        //    var productPrice = $(this).data('product-price');
 
-            //For debugging purposes
-            i++;
-            console.log("Iterate " + i);
-            console.log("productID " + productId);
-            console.log("shopID " + shopId);
-            console.log("Shop name " + shopName);
-            console.log("Product name " + productName);
-            console.log("Total Quantity " + totalQuantity);
-            console.log("Product price " + productPrice);
-            //End of debugging :)
+        //    //For debugging purposes
+        //    i++;
+        //    console.log("Iterate " + i);
+        //    console.log("productID " + productId);
+        //    console.log("shopID " + shopId);
+        //    console.log("Shop name " + shopName);
+        //    console.log("Product name " + productName);
+        //    console.log("Total Quantity " + totalQuantity);
+        //    console.log("Product price " + productPrice);
+        //    //End of debugging :)
 
-
+        item.forEach(item => {
             items.push({
-                productId: productId,
-                shopId: shopId,
-                shopName: shopName,
-                productName: productName,
-                totalQuantity: totalQuantity,
-                productPrice: productPrice
+                productId: item.productId,
+                shopId: item.shopId,
+                shopName: item.shopName,
+                productName: item.productName,
+                totalQuantity: item.totalQuantity,
+                productPrice: item.productPrice
             });
         });
+
 
         var contactNumber = $('#contactNumber').val();
         var address = $('#address').val();
@@ -153,9 +155,10 @@
             swal("Error!", "Please fill up the required fields", "error");
         }
         else {
+            var totalAmount = parseFloat($('#totalSum').text().replace('₱ ', ''));
             swal({
                 title: "Enter Payment",
-                text: "Total: ₱ " + @Html.Raw(CheckOut.ToString("f")),
+                text: "Total: ₱ " + totalAmount.toFixed(2),
                 content: {
                     element: "input",
                     attributes: {
@@ -169,8 +172,6 @@
                 }
             }).then((value) => {
                 if (value !== null) {
-                    var totalAmount = @Html.Raw(CheckOut.ToString("f"));
-
                     console.log("CASHHHH --------------------" + value);
                     if (value < totalAmount) {
                         swal("Error!", "Insufficient amount. Please enter the correct amount.", "error")

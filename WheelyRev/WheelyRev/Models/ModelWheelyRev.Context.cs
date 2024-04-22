@@ -136,5 +136,23 @@ namespace WheelyRev.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_MergeQuantity", userIdParameter);
         }
+    
+        public virtual ObjectResult<sp_CartItems_Result> sp_CartItems(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_CartItems_Result>("sp_CartItems", userIdParameter);
+        }
+    
+        public virtual int sp_UpdateCart(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_UpdateCart", userIdParameter);
+        }
     }
 }

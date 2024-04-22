@@ -111,6 +111,12 @@
     <FunctionImport Name="sp_MergeQuantity" ReturnType="Collection(Int32)">
       <Parameter Name="userId" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="sp_CartItems" ReturnType="Collection(WheelyRevModel.sp_CartItems_Result)">
+      <Parameter Name="userId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_UpdateCart">
+      <Parameter Name="userId" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="UserRoles">
     <Key>
@@ -310,6 +316,7 @@
     <Property Name="quantity" Type="Int32" />
     <Property Name="statusId" Type="Int32" />
     <NavigationProperty Name="Status" Relationship="WheelyRevModel.FK_Cart_Status" FromRole="Cart" ToRole="Status" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_Cart_Products">
     <End Type="WheelyRevModel.Products" Role="Products" Multiplicity="0..1" />
@@ -405,5 +412,19 @@
     <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="shopAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
+  <ComplexType Name="sp_CartItems_Result">
+    <Property Type="Int32" Name="userId" Nullable="true" />
+    <Property Type="Int32" Name="productID" Nullable="true" />
+    <Property Type="Int32" Name="totalQuantity" Nullable="true" />
+    <Property Type="String" Name="ImagePath" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="productName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="productCategory" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="productPrice" Nullable="false" Precision="19" />
+    <Property Type="Int32" Name="shopId" Nullable="false" />
+    <Property Type="String" Name="shopName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="contact" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="shopAddress" Nullable="true" MaxLength="50" />
+  </ComplexType>
 </Schema>

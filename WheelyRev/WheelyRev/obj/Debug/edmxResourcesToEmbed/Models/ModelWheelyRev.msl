@@ -110,6 +110,7 @@
     <EntitySetMapping Name="Cart">
       <EntityTypeMapping TypeName="WheelyRevModel.Cart">
         <MappingFragment StoreEntitySet="Cart">
+          <ScalarProperty Name="username" ColumnName="username" />
           <ScalarProperty Name="statusId" ColumnName="statusId" />
           <ScalarProperty Name="quantity" ColumnName="quantity" />
           <ScalarProperty Name="userId" ColumnName="userId" />
@@ -139,6 +140,7 @@
     <EntitySetMapping Name="vw_CartItem">
       <EntityTypeMapping TypeName="WheelyRevModel.vw_CartItem">
         <MappingFragment StoreEntitySet="vw_CartItem">
+          <ScalarProperty Name="username" ColumnName="username" />
           <ScalarProperty Name="shopAddress" ColumnName="shopAddress" />
           <ScalarProperty Name="contact" ColumnName="contact" />
           <ScalarProperty Name="shopName" ColumnName="shopName" />
@@ -154,5 +156,23 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="sp_MergeQuantity" FunctionName="WheelyRevModel.Store.sp_MergeQuantity" />
+    <FunctionImportMapping FunctionImportName="sp_CartItems" FunctionName="WheelyRevModel.Store.sp_CartItems">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="WheelyRevModel.sp_CartItems_Result">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="productID" ColumnName="productID" />
+          <ScalarProperty Name="totalQuantity" ColumnName="totalQuantity" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="productName" ColumnName="productName" />
+          <ScalarProperty Name="productCategory" ColumnName="productCategory" />
+          <ScalarProperty Name="productPrice" ColumnName="productPrice" />
+          <ScalarProperty Name="shopId" ColumnName="shopId" />
+          <ScalarProperty Name="shopName" ColumnName="shopName" />
+          <ScalarProperty Name="contact" ColumnName="contact" />
+          <ScalarProperty Name="shopAddress" ColumnName="shopAddress" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_UpdateCart" FunctionName="WheelyRevModel.Store.sp_UpdateCart" />
   </EntityContainerMapping>
 </Mapping>

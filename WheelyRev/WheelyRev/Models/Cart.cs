@@ -20,6 +20,7 @@ namespace WheelyRev.Models
         public Nullable<int> userId { get; set; }
         public Nullable<int> quantity { get; set; }
         public Nullable<int> statusId { get; set; }
+        public string username { get; set; }
     
         public virtual Products Products { get; set; }
         public virtual Shops Shops { get; set; }

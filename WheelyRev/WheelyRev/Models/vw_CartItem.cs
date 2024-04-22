@@ -25,5 +25,6 @@ namespace WheelyRev.Models
         public string shopName { get; set; }
         public string contact { get; set; }
         public string shopAddress { get; set; }
+        public string username { get; set; }
     }
 }

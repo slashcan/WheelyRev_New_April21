@@ -14,7 +14,7 @@ namespace WheelyRev.Controllers
         {
             IsUserLoggedSession();
 
-            var cartItem = _db.vw_CartItem.ToList().Where(m => m.userId == UserId);
+            var cartItem = _db.vw_CartItem.Where(m => m.userId == UserId);
             return View(cartItem);
         }
         [Authorize(Roles = "Admin,Customer,Store owner")]
@@ -26,9 +26,10 @@ namespace WheelyRev.Controllers
                 {
                     Cart cart = new Cart
                     {
+                        username = Username,
                         productID = productID,
                         shopId = shopId,
-                        userId = (int)Session["UserId"],
+                        userId = UserId,
                         quantity = quantity,
                         statusId = 2
                     };
@@ -76,6 +77,7 @@ namespace WheelyRev.Controllers
                         };
 
                         _tableTransaction.Create(transact);
+                        _db.sp_UpdateCart(UserId);
                     }
 
                     return Json(new { success = true, message = "Thank you!" });

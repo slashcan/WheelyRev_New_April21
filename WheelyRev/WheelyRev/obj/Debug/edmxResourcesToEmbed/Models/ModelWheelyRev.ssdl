@@ -7,6 +7,7 @@
     <Property Name="cartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="productID" Type="int" />
     <Property Name="shopId" Type="int" />
+    <Property Name="username" Type="nvarchar" MaxLength="50" />
     <Property Name="userId" Type="int" />
     <Property Name="quantity" Type="int" />
     <Property Name="statusId" Type="int" />
@@ -99,6 +100,7 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_CartItem' does not have a primary
       <PropertyRef Name="productPrice" />
       <PropertyRef Name="shopId" />
     </Key>
+    <Property Name="username" Type="nvarchar" MaxLength="50" />
     <Property Name="userId" Type="int" />
     <Property Name="productID" Type="int" />
     <Property Name="totalQuantity" Type="int" />
@@ -258,6 +260,9 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
   <Function Name="sp_BuyNow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="productId" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_CartItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userId" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_DefaultRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="userId" Type="int" Mode="In" />
   </Function>
@@ -266,6 +271,9 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
   </Function>
   <Function Name="sp_setShopOwner" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="userRoles_ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_UpdateCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userId" Type="int" Mode="In" />
   </Function>
   <Function Name="sp_UpdateQty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="quantity" Type="int" Mode="In" />
@@ -282,6 +290,7 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="vw_CartItem" EntityType="Self.vw_CartItem" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
+    [vw_CartItem].[username] AS [username], 
     [vw_CartItem].[userId] AS [userId], 
     [vw_CartItem].[productID] AS [productID], 
     [vw_CartItem].[totalQuantity] AS [totalQuantity], 

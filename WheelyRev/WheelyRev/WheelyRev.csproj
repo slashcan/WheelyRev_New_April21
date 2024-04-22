@@ -266,6 +266,9 @@
     <Compile Include="Models\sp_CartDisplay_Result.cs">
       <DependentUpon>ModelWheelyRev.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_CartItems_Result.cs">
+      <DependentUpon>ModelWheelyRev.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_ProductToBuy_Result.cs">
       <DependentUpon>ModelWheelyRev.tt</DependentUpon>
     </Compile>

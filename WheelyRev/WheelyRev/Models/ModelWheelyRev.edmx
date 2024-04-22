@@ -12,6 +12,7 @@
           <Property Name="cartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="productID" Type="int" />
           <Property Name="shopId" Type="int" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
           <Property Name="userId" Type="int" />
           <Property Name="quantity" Type="int" />
           <Property Name="statusId" Type="int" />
@@ -104,6 +105,7 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_CartItem' does not have a primary
             <PropertyRef Name="productPrice" />
             <PropertyRef Name="shopId" />
           </Key>
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
           <Property Name="userId" Type="int" />
           <Property Name="productID" Type="int" />
           <Property Name="totalQuantity" Type="int" />
@@ -263,6 +265,9 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
         <Function Name="sp_BuyNow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="productId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_CartItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_DefaultRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="int" Mode="In" />
         </Function>
@@ -271,6 +276,9 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
         </Function>
         <Function Name="sp_setShopOwner" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userRoles_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_UpdateCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_UpdateQty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="quantity" Type="int" Mode="In" />
@@ -287,6 +295,7 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vw_CartItem" EntityType="Self.vw_CartItem" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [vw_CartItem].[username] AS [username], 
     [vw_CartItem].[userId] AS [userId], 
     [vw_CartItem].[productID] AS [productID], 
     [vw_CartItem].[totalQuantity] AS [totalQuantity], 
@@ -471,6 +480,12 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
           <EntitySet Name="vw_CartItem" EntityType="WheelyRevModel.vw_CartItem" />
           <FunctionImport Name="sp_MergeQuantity" ReturnType="Collection(Int32)">
           <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_CartItems" ReturnType="Collection(WheelyRevModel.sp_CartItems_Result)">
+          <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_UpdateCart">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="UserRoles">
@@ -671,6 +686,7 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
           <Property Name="quantity" Type="Int32" />
           <Property Name="statusId" Type="Int32" />
           <NavigationProperty Name="Status" Relationship="WheelyRevModel.FK_Cart_Status" FromRole="Cart" ToRole="Status" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Cart_Products">
           <End Type="WheelyRevModel.Products" Role="Products" Multiplicity="0..1" />
@@ -766,7 +782,21 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
           <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="shopAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="sp_CartItems_Result">
+          <Property Type="Int32" Name="userId" Nullable="true" />
+          <Property Type="Int32" Name="productID" Nullable="true" />
+          <Property Type="Int32" Name="totalQuantity" Nullable="true" />
+          <Property Type="String" Name="ImagePath" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="productName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="productCategory" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="productPrice" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="shopId" Nullable="false" />
+          <Property Type="String" Name="shopName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="contact" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="shopAddress" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -882,6 +912,7 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
           <EntitySetMapping Name="Cart">
             <EntityTypeMapping TypeName="WheelyRevModel.Cart">
               <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="statusId" ColumnName="statusId" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
@@ -911,6 +942,7 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
           <EntitySetMapping Name="vw_CartItem">
             <EntityTypeMapping TypeName="WheelyRevModel.vw_CartItem">
               <MappingFragment StoreEntitySet="vw_CartItem">
+                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="shopAddress" ColumnName="shopAddress" />
                 <ScalarProperty Name="contact" ColumnName="contact" />
                 <ScalarProperty Name="shopName" ColumnName="shopName" />
@@ -926,6 +958,24 @@ warning 6002: The table/view 'WheelyRev.dbo.vw_UserRoles' does not have a primar
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_MergeQuantity" FunctionName="WheelyRevModel.Store.sp_MergeQuantity" />
+          <FunctionImportMapping FunctionImportName="sp_CartItems" FunctionName="WheelyRevModel.Store.sp_CartItems">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WheelyRevModel.sp_CartItems_Result">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="totalQuantity" ColumnName="totalQuantity" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="productCategory" ColumnName="productCategory" />
+                <ScalarProperty Name="productPrice" ColumnName="productPrice" />
+                <ScalarProperty Name="shopId" ColumnName="shopId" />
+                <ScalarProperty Name="shopName" ColumnName="shopName" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="shopAddress" ColumnName="shopAddress" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_UpdateCart" FunctionName="WheelyRevModel.Store.sp_UpdateCart" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
